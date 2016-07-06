@@ -1,0 +1,27 @@
+<link rel="import" href="../../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../../bower_components/express-web-components/express-router.html">
+<link rel="import" href="../../../../bower_components/express-web-components/express-middleware.html">
+
+<dom-module id="server-index">
+    <template>
+        <express-router path="/">
+            <express-middleware method="get" path="/" callback="[[indexHandler]]"></express-middleware>
+        </express-router>
+    </template>
+
+    <script>
+        class ServerIndexComponent {
+            beforeRegister() {
+                this.is = 'server-index';
+            }
+
+            ready() {
+                this.indexHandler = (req, res) => {
+                    res.render('index', { title: 'Express' });
+                };
+            }
+        }
+
+        Polymer(ServerIndexComponent);
+    </script>
+</dom-module>

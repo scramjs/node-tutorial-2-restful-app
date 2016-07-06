@@ -1,0 +1,61 @@
+<link rel="import" href="../../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../../bower_components/express-web-components/express-router.html">
+<link rel="import" href="../../../../bower_components/express-web-components/express-middleware.html">
+
+<dom-module id="server-users">
+    <template>
+        <express-router path="/users">
+            <express-middleware method="get" path="/userlist" callback="[[userListHandler]]"></express-middleware>
+            <express-middleware method="post" path="/adduser" callback="[[addUserHandler]]"></express-middleware>
+            <express-middleware method="delete" path="/deleteuser/:id" callback="[[deleteUserHandler]]"></express-middleware>
+        </express-router>
+    </template>
+
+    <script>
+        class ServerUsersComponent {
+            beforeRegister() {
+                this.is = 'server-users';
+            }
+
+            ready() {
+                /*
+                 * GET userlist.
+                 */
+                this.userListHandler = (req, res) => {
+                    var db = req.db;
+                    var collection = db.get('userlist');
+                    collection.find({},{},function(e,docs){
+                        res.json(docs);
+                    });
+                };
+
+                /*
+                 * POST to adduser.
+                 */
+                this.addUserHandler = (req, res) => {
+                    var db = req.db;
+                    var collection = db.get('userlist');
+                    collection.insert(req.body, function(err, result){
+                        res.send(
+                            (err === null) ? { msg: '' } : { msg: err }
+                        );
+                    });
+                };
+
+                /*
+                 * DELETE to deleteuser.
+                 */
+                this.deleteUserHandler = (req, res) => {
+                    var db = req.db;
+                    var collection = db.get('userlist');
+                    var userToDelete = req.params.id;
+                    collection.remove({ '_id' : userToDelete }, function(err) {
+                        res.send((err === null) ? { msg: '' } : { msg:'error: ' + err });
+                    });
+                };
+            }
+        }
+
+        Polymer(ServerUsersComponent);
+    </script>
+</dom-module>

@@ -1,0 +1,19 @@
+{
+  "name": "nodetest2b",
+  "authors": [
+    "Jordan Last <jordan.michael.last@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/scramjs/node-tutorial-2-restful-app",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "^1.6.0",
+    "express-web-components": "^0.2.1"
+  }
+}
