@@ -22,9 +22,9 @@
                  * GET userlist.
                  */
                 this.userListHandler = (req, res) => {
-                    var db = req.db;
-                    var collection = db.get('userlist');
-                    collection.find({},{},function(e,docs){
+                    const db = req.db;
+                    const collection = db.get('userlist');
+                    collection.find({}, {}, (e,docs) => {
                         res.json(docs);
                     });
                 };
@@ -33,9 +33,9 @@
                  * POST to adduser.
                  */
                 this.addUserHandler = (req, res) => {
-                    var db = req.db;
-                    var collection = db.get('userlist');
-                    collection.insert(req.body, function(err, result){
+                    const db = req.db;
+                    const collection = db.get('userlist');
+                    collection.insert(req.body, (err, result) => {
                         res.send(
                             (err === null) ? { msg: '' } : { msg: err }
                         );
@@ -46,10 +46,10 @@
                  * DELETE to deleteuser.
                  */
                 this.deleteUserHandler = (req, res) => {
-                    var db = req.db;
-                    var collection = db.get('userlist');
-                    var userToDelete = req.params.id;
-                    collection.remove({ '_id' : userToDelete }, function(err) {
+                    const db = req.db;
+                    const collection = db.get('userlist');
+                    const userToDelete = req.params.id;
+                    collection.remove({ '_id' : userToDelete }, (err) => {
                         res.send((err === null) ? { msg: '' } : { msg:'error: ' + err });
                     });
                 };
